@@ -28,9 +28,9 @@
             opacity: 0; /* Asegura que los elementos estén ocultos al inicio */
         }
 
-        /* Estilo para el modal */
+        /* Estilos del modal (ventana emergente) */
         .modal {
-            display: none;
+            display: none; /* Oculto por defecto */
             position: fixed;
             z-index: 100;
             left: 0;
@@ -38,65 +38,40 @@
             width: 100%;
             height: 100%;
             overflow: auto;
-            background-color: rgba(0,0,0,0.8);
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
-            justify-content: center;
-            align-items: center;
+            background-color: rgba(0, 0, 0, 0.8); /* Fondo semi-transparente oscuro */
+            padding-top: 60px;
         }
 
         .modal-content {
-            background-color: #2d3748;
-            margin: 15% auto;
-            padding: 30px;
-            border-radius: 1.5rem;
+            background-color: #2d3748; /* Fondo del modal */
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #4a5568;
             width: 80%;
-            max-width: 700px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-            animation: slideIn 0.3s ease-out;
+            max-width: 600px;
+            border-radius: 1rem;
             color: #e2e8f0;
-        }
-        
-        @keyframes slideIn {
-            from { transform: translateY(-50px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            animation: fadeIn 0.3s;
         }
 
-        .close {
-            color: #ccc;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .close-button {
+            color: #e2e8f0;
             float: right;
             font-size: 28px;
             font-weight: bold;
         }
 
-        .close:hover,
-        .close:focus {
-            color: white;
+        .close-button:hover,
+        .close-button:focus {
+            color: #cbd5e0;
             text-decoration: none;
             cursor: pointer;
-        }
-
-        /* Loader para la API */
-        .loader {
-            border: 4px solid #f3f3f3;
-            border-radius: 50%;
-            border-top: 4px solid #3498db;
-            width: 40px;
-            height: 40px;
-            -webkit-animation: spin 2s linear infinite; /* Safari */
-            animation: spin 2s linear infinite;
-            margin: 20px auto;
-        }
-
-        /* Safari */
-        @-webkit-keyframes spin {
-            0% { -webkit-transform: rotate(0deg); }
-            100% { -webkit-transform: rotate(360deg); }
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
         }
     </style>
 </head>
@@ -109,137 +84,410 @@
         </header>
 
         <!-- Glosario con tarjetas visuales -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="glossary-container">
-
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <!-- Término 1: Variable -->
             <div class="animate-fadeInUp bg-gray-700 p-6 rounded-2xl shadow-md transition-all duration-300 transform hover:scale-105 hover:shadow-xl flex flex-col items-center text-center" style="animation-delay: 0.1s;">
                 <img src="https://placehold.co/150x100/38a169/ffffff?text=Variable" alt="Imagen de Variable" class="rounded-lg mb-4">
                 <dt class="text-xl font-semibold text-teal-300 mb-2">Variable</dt>
-                <dd class="text-gray-400 text-sm mb-4">Espacio de almacenamiento en memoria para guardar datos. En PHP se usa $, en Python no se requiere.</dd>
-                <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full transition-colors duration-300" onclick="showExplanation('Variable')">Explicación Detallada ✨</button>
+                <dd class="text-gray-400 text-sm">Espacio de almacenamiento en memoria para guardar datos. En PHP se usa $, en Python no se requiere.</dd>
+                <button class="mt-4 bg-blue-600 text-white font-bold py-2 px-4 rounded-full transition-colors duration-300 hover:bg-blue-700" onclick="showExplanation('variable')">Explicación Detallada</button>
             </div>
 
             <!-- Término 2: Función -->
             <div class="animate-fadeInUp bg-gray-700 p-6 rounded-2xl shadow-md transition-all duration-300 transform hover:scale-105 hover:shadow-xl flex flex-col items-center text-center" style="animation-delay: 0.2s;">
                 <img src="https://placehold.co/150x100/3182ce/ffffff?text=Funcion()" alt="Imagen de Función" class="rounded-lg mb-4">
                 <dt class="text-xl font-semibold text-blue-300 mb-2">Función</dt>
-                <dd class="text-gray-400 text-sm mb-4">Bloque de código reutilizable que realiza una tarea específica. Ayuda a organizar y modularizar el código.</dd>
-                <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full transition-colors duration-300" onclick="showExplanation('Función')">Explicación Detallada ✨</button>
+                <dd class="text-gray-400 text-sm">Bloque de código reutilizable que realiza una tarea específica. Ayuda a organizar y modularizar el código.</dd>
+                <button class="mt-4 bg-blue-600 text-white font-bold py-2 px-4 rounded-full transition-colors duration-300 hover:bg-blue-700" onclick="showExplanation('funcion')">Explicación Detallada</button>
             </div>
 
             <!-- Término 3: Condicional -->
             <div class="animate-fadeInUp bg-gray-700 p-6 rounded-2xl shadow-md transition-all duration-300 transform hover:scale-105 hover:shadow-xl flex flex-col items-center text-center" style="animation-delay: 0.3s;">
                 <img src="https://placehold.co/150x100/d53f8c/ffffff?text=if/else" alt="Imagen de Condicional" class="rounded-lg mb-4">
                 <dt class="text-xl font-semibold text-pink-300 mb-2">Condicional (if/else)</dt>
-                <dd class="text-gray-400 text-sm mb-4">Estructura que ejecuta código si una condición es verdadera, permitiendo al programa tomar decisiones.</dd>
-                <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full transition-colors duration-300" onclick="showExplanation('Condicional')">Explicación Detallada ✨</button>
+                <dd class="text-gray-400 text-sm">Estructura que ejecuta código si una condición es verdadera, permitiendo al programa tomar decisiones.</dd>
+                <button class="mt-4 bg-blue-600 text-white font-bold py-2 px-4 rounded-full transition-colors duration-300 hover:bg-blue-700" onclick="showExplanation('condicional')">Explicación Detallada</button>
             </div>
-
+            
             <!-- Término 4: Bucle -->
             <div class="animate-fadeInUp bg-gray-700 p-6 rounded-2xl shadow-md transition-all duration-300 transform hover:scale-105 hover:shadow-xl flex flex-col items-center text-center" style="animation-delay: 0.4s;">
                 <img src="https://placehold.co/150x100/6b46c1/ffffff?text=Bucle" alt="Imagen de Bucle" class="rounded-lg mb-4">
                 <dt class="text-xl font-semibold text-purple-300 mb-2">Bucle (for/while)</dt>
-                <dd class="text-gray-400 text-sm mb-4">Estructura que repite un bloque de código. Esencial para procesar listas, arrays o colecciones de datos.</dd>
-                <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full transition-colors duration-300" onclick="showExplanation('Bucle')">Explicación Detallada ✨</button>
+                <dd class="text-gray-400 text-sm">Estructura que repite un bloque de código. Esencial para procesar listas, arrays o colecciones de datos.</dd>
+                <button class="mt-4 bg-blue-600 text-white font-bold py-2 px-4 rounded-full transition-colors duration-300 hover:bg-blue-700" onclick="showExplanation('bucle')">Explicación Detallada</button>
             </div>
 
             <!-- Término 5: Lista (Python) -->
             <div class="animate-fadeInUp bg-gray-700 p-6 rounded-2xl shadow-md transition-all duration-300 transform hover:scale-105 hover:shadow-xl flex flex-col items-center text-center" style="animation-delay: 0.5s;">
                 <img src="https://placehold.co/150x100/38b2ac/ffffff?text=Lista" alt="Imagen de Lista" class="rounded-lg mb-4">
                 <dt class="text-xl font-semibold text-teal-300 mb-2">Lista (Python)</dt>
-                <dd class="text-gray-400 text-sm mb-4">Colección de elementos ordenada y mutable. Se define con corchetes `[ ]`.</dd>
-                <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full transition-colors duration-300" onclick="showExplanation('Lista (Python)')">Explicación Detallada ✨</button>
+                <dd class="text-gray-400 text-sm">Colección de elementos ordenada y mutable. Se define con corchetes `[ ]`.</dd>
+                <button class="mt-4 bg-blue-600 text-white font-bold py-2 px-4 rounded-full transition-colors duration-300 hover:bg-blue-700" onclick="showExplanation('lista')">Explicación Detallada</button>
             </div>
 
             <!-- Término 6: Array (PHP) -->
             <div class="animate-fadeInUp bg-gray-700 p-6 rounded-2xl shadow-md transition-all duration-300 transform hover:scale-105 hover:shadow-xl flex flex-col items-center text-center" style="animation-delay: 0.6s;">
                 <img src="https://placehold.co/150x100/319795/ffffff?text=Array" alt="Imagen de Array" class="rounded-lg mb-4">
                 <dt class="text-xl font-semibold text-cyan-300 mb-2">Array (PHP)</dt>
-                <dd class="text-gray-400 text-sm mb-4">Almacena múltiples valores en una sola variable. Puede ser indexado o asociativo (clave-valor).</dd>
-                <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full transition-colors duration-300" onclick="showExplanation('Array (PHP)')">Explicación Detallada ✨</button>
+                <dd class="text-gray-400 text-sm">Almacena múltiples valores en una sola variable. Puede ser indexado o asociativo (clave-valor).</dd>
+                <button class="mt-4 bg-blue-600 text-white font-bold py-2 px-4 rounded-full transition-colors duration-300 hover:bg-blue-700" onclick="showExplanation('array')">Explicación Detallada</button>
             </div>
 
             <!-- Término 7: Diccionario (Python) -->
             <div class="animate-fadeInUp bg-gray-700 p-6 rounded-2xl shadow-md transition-all duration-300 transform hover:scale-105 hover:shadow-xl flex flex-col items-center text-center" style="animation-delay: 0.7s;">
                 <img src="https://placehold.co/150x100/d69e2e/ffffff?text=Diccionario" alt="Imagen de Diccionario" class="rounded-lg mb-4">
                 <dt class="text-xl font-semibold text-yellow-300 mb-2">Diccionario (Python)</dt>
-                <dd class="text-gray-400 text-sm mb-4">Colección desordenada de pares clave-valor. Permite un acceso eficiente a los datos.</dd>
-                <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full transition-colors duration-300" onclick="showExplanation('Diccionario (Python)')">Explicación Detallada ✨</button>
+                <dd class="text-gray-400 text-sm">Colección desordenada de pares clave-valor. Permite un acceso eficiente a los datos.</dd>
+                <button class="mt-4 bg-blue-600 text-white font-bold py-2 px-4 rounded-full transition-colors duration-300 hover:bg-blue-700" onclick="showExplanation('diccionario')">Explicación Detallada</button>
             </div>
 
             <!-- Término 8: Superglobales (PHP) -->
             <div class="animate-fadeInUp bg-gray-700 p-6 rounded-2xl shadow-md transition-all duration-300 transform hover:scale-105 hover:shadow-xl flex flex-col items-center text-center" style="animation-delay: 0.8s;">
                 <img src="https://placehold.co/150x100/f56565/ffffff?text=Superglobal" alt="Imagen de Superglobales" class="rounded-lg mb-4">
                 <dt class="text-xl font-semibold text-red-300 mb-2">Superglobales (PHP)</dt>
-                <dd class="text-gray-400 text-sm mb-4">Variables integradas que están disponibles en cualquier ámbito del script, como `$_GET`, `$_POST` o `$_SESSION`.</dd>
-                <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full transition-colors duration-300" onclick="showExplanation('Superglobales (PHP)')">Explicación Detallada ✨</button>
+                <dd class="text-gray-400 text-sm">Variables integradas que están disponibles en cualquier ámbito del script, como `$_GET`, `$_POST` o `$_SESSION`.</dd>
+                <button class="mt-4 bg-blue-600 text-white font-bold py-2 px-4 rounded-full transition-colors duration-300 hover:bg-blue-700" onclick="showExplanation('superglobales')">Explicación Detallada</button>
             </div>
 
             <!-- Término 9: Módulo (Python) -->
             <div class="animate-fadeInUp bg-gray-700 p-6 rounded-2xl shadow-md transition-all duration-300 transform hover:scale-105 hover:shadow-xl flex flex-col items-center text-center" style="animation-delay: 0.9s;">
                 <img src="https://placehold.co/150x100/4c7c34/ffffff?text=Modulo" alt="Imagen de Módulo" class="rounded-lg mb-4">
                 <dt class="text-xl font-semibold text-green-300 mb-2">Módulo (Python)</dt>
-                <dd class="text-gray-400 text-sm mb-4">Archivo que contiene un conjunto de funciones, clases y variables. Se importa para usar sus funcionalidades.</dd>
-                <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full transition-colors duration-300" onclick="showExplanation('Módulo (Python)')">Explicación Detallada ✨</button>
+                <dd class="text-gray-400 text-sm">Archivo que contiene un conjunto de funciones, clases y variables. Se importa para usar sus funcionalidades.</dd>
+                <button class="mt-4 bg-blue-600 text-white font-bold py-2 px-4 rounded-full transition-colors duration-300 hover:bg-blue-700" onclick="showExplanation('modulo')">Explicación Detallada</button>
             </div>
 
             <!-- Término 10: Namespace (PHP) -->
             <div class="animate-fadeInUp bg-gray-700 p-6 rounded-2xl shadow-md transition-all duration-300 transform hover:scale-105 hover:shadow-xl flex flex-col items-center text-center" style="animation-delay: 1.0s;">
                 <img src="https://placehold.co/150x100/4c7c34/ffffff?text=Namespace" alt="Imagen de Namespace" class="rounded-lg mb-4">
                 <dt class="text-xl font-semibold text-green-300 mb-2">Namespace (PHP)</dt>
-                <dd class="text-gray-400 text-sm mb-4">Sistema para encapsular elementos y evitar conflictos de nombres, similar a los módulos en otros lenguajes.</dd>
-                <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full transition-colors duration-300" onclick="showExplanation('Namespace (PHP)')">Explicación Detallada ✨</button>
+                <dd class="text-gray-400 text-sm">Sistema para encapsular elementos y evitar conflictos de nombres, similar a los módulos en otros lenguajes.</dd>
+                <button class="mt-4 bg-blue-600 text-white font-bold py-2 px-4 rounded-full transition-colors duration-300 hover:bg-blue-700" onclick="showExplanation('namespace')">Explicación Detallada</button>
             </div>
 
             <!-- Término 11: Clase -->
             <div class="animate-fadeInUp bg-gray-700 p-6 rounded-2xl shadow-md transition-all duration-300 transform hover:scale-105 hover:shadow-xl flex flex-col items-center text-center" style="animation-delay: 1.1s;">
                 <img src="https://placehold.co/150x100/805ad5/ffffff?text=Clase" alt="Imagen de Clase" class="rounded-lg mb-4">
                 <dt class="text-xl font-semibold text-purple-300 mb-2">Clase</dt>
-                <dd class="text-gray-400 text-sm mb-4">Una plantilla para crear objetos. Define sus atributos y métodos.</dd>
-                <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full transition-colors duration-300" onclick="showExplanation('Clase')">Explicación Detallada ✨</button>
+                <dd class="text-gray-400 text-sm">Una plantilla para crear objetos. Define sus atributos y métodos.</dd>
+                <button class="mt-4 bg-blue-600 text-white font-bold py-2 px-4 rounded-full transition-colors duration-300 hover:bg-blue-700" onclick="showExplanation('clase')">Explicación Detallada</button>
             </div>
 
             <!-- Término 12: Objeto -->
             <div class="animate-fadeInUp bg-gray-700 p-6 rounded-2xl shadow-md transition-all duration-300 transform hover:scale-105 hover:shadow-xl flex flex-col items-center text-center" style="animation-delay: 1.2s;">
                 <img src="https://placehold.co/150x100/805ad5/ffffff?text=Objeto" alt="Imagen de Objeto" class="rounded-lg mb-4">
                 <dt class="text-xl font-semibold text-purple-300 mb-2">Objeto</dt>
-                <dd class="text-gray-400 text-sm mb-4">Una instancia de una clase. Una entidad concreta creada a partir de una plantilla.</dd>
-                <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full transition-colors duration-300" onclick="showExplanation('Objeto')">Explicación Detallada ✨</button>
+                <dd class="text-gray-400 text-sm">Una instancia de una clase. Una entidad concreta creada a partir de una plantilla.</dd>
+                <button class="mt-4 bg-blue-600 text-white font-bold py-2 px-4 rounded-full transition-colors duration-300 hover:bg-blue-700" onclick="showExplanation('objeto')">Explicación Detallada</button>
             </div>
-
+            
             <!-- Término 13: POO -->
             <div class="animate-fadeInUp bg-gray-700 p-6 rounded-2xl shadow-md transition-all duration-300 transform hover:scale-105 hover:shadow-xl flex flex-col items-center text-center" style="animation-delay: 1.3s;">
                 <img src="https://placehold.co/150x100/4c7c34/ffffff?text=POO" alt="Imagen de POO" class="rounded-lg mb-4">
                 <dt class="text-xl font-semibold text-green-300 mb-2">Programación Orientada a Objetos (POO)</dt>
-                <dd class="text-gray-400 text-sm mb-4">Paradigma de programación que organiza el código en objetos que contienen datos y comportamientos.</dd>
-                <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full transition-colors duration-300" onclick="showExplanation('Programación Orientada a Objetos (POO)')">Explicación Detallada ✨</button>
+                <dd class="text-gray-400 text-sm">Paradigma de programación que organiza el código en objetos que contienen datos y comportamientos.</dd>
+                <button class="mt-4 bg-blue-600 text-white font-bold py-2 px-4 rounded-full transition-colors duration-300 hover:bg-blue-700" onclick="showExplanation('poo')">Explicación Detallada</button>
             </div>
-
+            
             <!-- Término 14: Herencia -->
             <div class="animate-fadeInUp bg-gray-700 p-6 rounded-2xl shadow-md transition-all duration-300 transform hover:scale-105 hover:shadow-xl flex flex-col items-center text-center" style="animation-delay: 1.4s;">
                 <img src="https://placehold.co/150x100/667eea/ffffff?text=Herencia" alt="Imagen de Herencia" class="rounded-lg mb-4">
                 <dt class="text-xl font-semibold text-indigo-300 mb-2">Herencia</dt>
-                <dd class="text-gray-400 text-sm mb-4">Mecanismo por el cual una clase (hija) adquiere las propiedades y métodos de otra clase (padre).</dd>
-                <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full transition-colors duration-300" onclick="showExplanation('Herencia')">Explicación Detallada ✨</button>
+                <dd class="text-gray-400 text-sm">Mecanismo por el cual una clase (hija) adquiere las propiedades y métodos de otra clase (padre).</dd>
+                <button class="mt-4 bg-blue-600 text-white font-bold py-2 px-4 rounded-full transition-colors duration-300 hover:bg-blue-700" onclick="showExplanation('herencia')">Explicación Detallada</button>
             </div>
-
+            
             <!-- Término 15: Polimorfismo -->
             <div class="animate-fadeInUp bg-gray-700 p-6 rounded-2xl shadow-md transition-all duration-300 transform hover:scale-105 hover:shadow-xl flex flex-col items-center text-center" style="animation-delay: 1.5s;">
                 <img src="https://placehold.co/150x100/9f7aea/ffffff?text=Polimorfismo" alt="Imagen de Polimorfismo" class="rounded-lg mb-4">
                 <dt class="text-xl font-semibold text-purple-300 mb-2">Polimorfismo</dt>
-                <dd class="text-gray-400 text-sm mb-4">Principio que permite que un mismo método o función se comporte de manera diferente en distintas clases.</dd>
-                <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full transition-colors duration-300" onclick="showExplanation('Polimorfismo')">Explicación Detallada ✨</button>
+                <dd class="text-gray-400 text-sm">Principio que permite que un mismo método o función se comporte de manera diferente en distintas clases.</dd>
+                <button class="mt-4 bg-blue-600 text-white font-bold py-2 px-4 rounded-full transition-colors duration-300 hover:bg-blue-700" onclick="showExplanation('polimorfismo')">Explicación Detallada</button>
             </div>
-
+            
             <!-- Término 16: Tupla (Python) -->
             <div class="animate-fadeInUp bg-gray-700 p-6 rounded-2xl shadow-md transition-all duration-300 transform hover:scale-105 hover:shadow-xl flex flex-col items-center text-center" style="animation-delay: 1.6s;">
                 <img src="https://placehold.co/150x100/4299e1/ffffff?text=Tupla" alt="Imagen de Tupla" class="rounded-lg mb-4">
                 <dt class="text-xl font-semibold text-blue-300 mb-2">Tupla (Python)</dt>
-                <dd class="text-gray-400 text-sm mb-4">Una colección de elementos ordenada e **inmutable**. Se define con paréntesis `( )`.</dd>
-                <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full transition-colors duration-300" onclick="showExplanation('Tupla (Python)')">Explicación Detallada ✨</button>
+                <dd class="text-gray-400 text-sm">Una colección de elementos ordenada e **inmutable**. Se define con paréntesis `( )`.</dd>
+                <button class="mt-4 bg-blue-600 text-white font-bold py-2 px-4 rounded-full transition-colors duration-300 hover:bg-blue-700" onclick="showExplanation('tupla')">Explicación Detallada</button>
             </div>
 
             <!-- Término 17: PDO (PHP) -->
             <div class="animate-fadeInUp bg-gray-700 p-6 rounded-2xl shadow-md transition-all duration-300 transform hover:scale-105 hover:shadow-xl flex flex-col items-center text-center" style="animation-delay: 1.7s;">
                 <img src="https://placehold.co/150x100/f6ad55/ffffff?text=PDO" alt="Imagen de PDO" class="rounded-lg mb-4">
-                <dt class="text-xl font-semibold text-orange-300 mb-
+                <dt class="text-xl font-semibold text-orange-300 mb-2">PDO (PHP)</dt>
+                <dd class="text-gray-400 text-sm">Abreviatura de PHP Data Objects. Una extensión para acceder a bases de datos de forma segura y portable.</dd>
+                <button class="mt-4 bg-blue-600 text-white font-bold py-2 px-4 rounded-full transition-colors duration-300 hover:bg-blue-700" onclick="showExplanation('pdo')">Explicación Detallada</button>
+            </div>
+            
+            <!-- Término 18: Decorador (Python) -->
+            <div class="animate-fadeInUp bg-gray-700 p-6 rounded-2xl shadow-md transition-all duration-300 transform hover:scale-105 hover:shadow-xl flex flex-col items-center text-center" style="animation-delay: 1.8s;">
+                <img src="https://placehold.co/150x100/6c757d/ffffff?text=@Decorator" alt="Imagen de Decorador" class="rounded-lg mb-4">
+                <dt class="text-xl font-semibold text-gray-400 mb-2">Decorador (Python)</dt>
+                <dd class="text-gray-400 text-sm">Función que añade funcionalidad a otra función sin modificar su código directamente.</dd>
+                <button class="mt-4 bg-blue-600 text-white font-bold py-2 px-4 rounded-full transition-colors duration-300 hover:bg-blue-700" onclick="showExplanation('decorador')">Explicación Detallada</button>
+            </div>
+            
+            <!-- Término 19: Composer (PHP) -->
+            <div class="animate-fadeInUp bg-gray-700 p-6 rounded-2xl shadow-md transition-all duration-300 transform hover:scale-105 hover:shadow-xl flex flex-col items-center text-center" style="animation-delay: 1.9s;">
+                <img src="https://placehold.co/150x100/6c757d/ffffff?text=Composer" alt="Imagen de Composer" class="rounded-lg mb-4">
+                <dt class="text-xl font-semibold text-gray-400 mb-2">Composer (PHP)</dt>
+                <dd class="text-gray-400 text-sm">Herramienta de gestión de dependencias para PHP. Permite instalar y actualizar librerías fácilmente.</dd>
+                <button class="mt-4 bg-blue-600 text-white font-bold py-2 px-4 rounded-full transition-colors duration-300 hover:bg-blue-700" onclick="showExplanation('composer')">Explicación Detallada</button>
+            </div>
+            
+            <!-- Término 20: Entorno Virtual (Python) -->
+            <div class="animate-fadeInUp bg-gray-700 p-6 rounded-2xl shadow-md transition-all duration-300 transform hover:scale-105 hover:shadow-xl flex flex-col items-center text-center" style="animation-delay: 2.0s;">
+                <img src="https://placehold.co/150x100/718096/ffffff?text=venv" alt="Imagen de Entorno Virtual" class="rounded-lg mb-4">
+                <dt class="text-xl font-semibold text-gray-400 mb-2">Entorno Virtual (Python)</dt>
+                <dd class="text-gray-400 text-sm">Directorio aislado con su propia instalación de Python y paquetes, evitando conflictos entre proyectos.</dd>
+                <button class="mt-4 bg-blue-600 text-white font-bold py-2 px-4 rounded-full transition-colors duration-300 hover:bg-blue-700" onclick="showExplanation('entorno-virtual')">Explicación Detallada</button>
+            </div>
+            
+            <!-- Término 21: Autoloading (PHP) -->
+            <div class="animate-fadeInUp bg-gray-700 p-6 rounded-2xl shadow-md transition-all duration-300 transform hover:scale-105 hover:shadow-xl flex flex-col items-center text-center" style="animation-delay: 2.1s;">
+                <img src="https://placehold.co/150x100/718096/ffffff?text=Autoloading" alt="Imagen de Autoloading" class="rounded-lg mb-4">
+                <dt class="text-xl font-semibold text-gray-400 mb-2">Autoloading (PHP)</dt>
+                <dd class="text-gray-400 text-sm">Proceso automático para cargar clases en tiempo de ejecución, sin tener que usar `require` o `include`.</dd>
+                <button class="mt-4 bg-blue-600 text-white font-bold py-2 px-4 rounded-full transition-colors duration-300 hover:bg-blue-700" onclick="showExplanation('autoloading')">Explicación Detallada</button>
+            </div>
+            
+            <!-- Término 22: PIP (Python) -->
+            <div class="animate-fadeInUp bg-gray-700 p-6 rounded-2xl shadow-md transition-all duration-300 transform hover:scale-105 hover:shadow-xl flex flex-col items-center text-center" style="animation-delay: 2.2s;">
+                <img src="https://placehold.co/150x100/e53e3e/ffffff?text=pip" alt="Imagen de PIP" class="rounded-lg mb-4">
+                <dt class="text-xl font-semibold text-red-400 mb-2">PIP (Python)</dt>
+                <dd class="text-gray-400 text-sm">Sistema de gestión de paquetes para Python. Permite instalar, actualizar y eliminar librerías.</dd>
+                <button class="mt-4 bg-blue-600 text-white font-bold py-2 px-4 rounded-full transition-colors duration-300 hover:bg-blue-700" onclick="showExplanation('pip')">Explicación Detallada</button>
+            </div>
+            
+            <!-- Término 23: Traits (PHP) -->
+            <div class="animate-fadeInUp bg-gray-700 p-6 rounded-2xl shadow-md transition-all duration-300 transform hover:scale-105 hover:shadow-xl flex flex-col items-center text-center" style="animation-delay: 2.3s;">
+                <img src="https://placehold.co/150x100/e53e3e/ffffff?text=Traits" alt="Imagen de Traits" class="rounded-lg mb-4">
+                <dt class="text-xl font-semibold text-red-400 mb-2">Traits (PHP)</dt>
+                <dd class="text-gray-400 text-sm">Mecanismo para reutilizar código en clases, superando las limitaciones de la herencia múltiple.</dd>
+                <button class="mt-4 bg-blue-600 text-white font-bold py-2 px-4 rounded-full transition-colors duration-300 hover:bg-blue-700" onclick="showExplanation('traits')">Explicación Detallada</button>
+            </div>
+            
+            <!-- Término 24: Sesión (PHP) -->
+            <div class="animate-fadeInUp bg-gray-700 p-6 rounded-2xl shadow-md transition-all duration-300 transform hover:scale-105 hover:shadow-xl flex flex-col items-center text-center" style="animation-delay: 2.4s;">
+                <img src="https://placehold.co/150x100/38a169/ffffff?text=Sesión" alt="Imagen de Sesión" class="rounded-lg mb-4">
+                <dt class="text-xl font-semibold text-green-300 mb-2">Sesión (PHP)</dt>
+                <dd class="text-gray-400 text-sm">Manera de almacenar información del usuario a través de múltiples páginas, manteniendo el estado de la aplicación.</dd>
+                <button class="mt-4 bg-blue-600 text-white font-bold py-2 px-4 rounded-full transition-colors duration-300 hover:bg-blue-700" onclick="showExplanation('sesion')">Explicación Detallada</button>
+            </div>
+            
+            <!-- Término 25: Framework -->
+            <div class="animate-fadeInUp bg-gray-700 p-6 rounded-2xl shadow-md transition-all duration-300 transform hover:scale-105 hover:shadow-xl flex flex-col items-center text-center" style="animation-delay: 2.5s;">
+                <img src="https://placehold.co/150x100/d69e2e/ffffff?text=Framework" alt="Imagen de Framework" class="rounded-lg mb-4">
+                <dt class="text-xl font-semibold text-yellow-300 mb-2">Framework</dt>
+                <dd class="text-gray-400 text-sm">Un esqueleto de código que facilita el desarrollo de aplicaciones web. Ej: Django (Python), Laravel (PHP).</dd>
+                <button class="mt-4 bg-blue-600 text-white font-bold py-2 px-4 rounded-full transition-colors duration-300 hover:bg-blue-700" onclick="showExplanation('framework')">Explicación Detallada</button>
+            </div>
+
+            <!-- Término 26: Cookie (PHP) -->
+            <div class="animate-fadeInUp bg-gray-700 p-6 rounded-2xl shadow-md transition-all duration-300 transform hover:scale-105 hover:shadow-xl flex flex-col items-center text-center" style="animation-delay: 2.6s;">
+                <img src="https://placehold.co/150x100/3182ce/ffffff?text=Cookie" alt="Imagen de Cookie" class="rounded-lg mb-4">
+                <dt class="text-xl font-semibold text-blue-300 mb-2">Cookie (PHP)</dt>
+                <dd class="text-gray-400 text-sm">Pequeño archivo de texto que el servidor envía al navegador. Se usa para recordar información del usuario.</dd>
+                <button class="mt-4 bg-blue-600 text-white font-bold py-2 px-4 rounded-full transition-colors duration-300 hover:bg-blue-700" onclick="showExplanation('cookie')">Explicación Detallada</button>
+            </div>
+            
+            <!-- Término 27: Excepción -->
+            <div class="animate-fadeInUp bg-gray-700 p-6 rounded-2xl shadow-md transition-all duration-300 transform hover:scale-105 hover:shadow-xl flex flex-col items-center text-center" style="animation-delay: 2.7s;">
+                <img src="https://placehold.co/150x100/d53f8c/ffffff?text=Excepcion" alt="Imagen de Excepción" class="rounded-lg mb-4">
+                <dt class="text-xl font-semibold text-pink-300 mb-2">Excepción</dt>
+                <dd class="text-gray-400 text-sm">Un evento que interrumpe el flujo normal del programa debido a un error. Se maneja con `try/catch` o `try/except`.</dd>
+                <button class="mt-4 bg-blue-600 text-white font-bold py-2 px-4 rounded-full transition-colors duration-300 hover:bg-blue-700" onclick="showExplanation('excepcion')">Explicación Detallada</button>
+            </div>
+            
+            <!-- Término 28: API -->
+            <div class="animate-fadeInUp bg-gray-700 p-6 rounded-2xl shadow-md transition-all duration-300 transform hover:scale-105 hover:shadow-xl flex flex-col items-center text-center" style="animation-delay: 2.8s;">
+                <img src="https://placehold.co/150x100/38b2ac/ffffff?text=API" alt="Imagen de API" class="rounded-lg mb-4">
+                <dt class="text-xl font-semibold text-teal-300 mb-2">API</dt>
+                <dd class="text-gray-400 text-sm">Interfaz de Programación de Aplicaciones. Permite que diferentes programas se comuniquen entre sí.</dd>
+                <button class="mt-4 bg-blue-600 text-white font-bold py-2 px-4 rounded-full transition-colors duration-300 hover:bg-blue-700" onclick="showExplanation('api')">Explicación Detallada</button>
+            </div>
+            
+            <!-- Término 29: Debugging -->
+            <div class="animate-fadeInUp bg-gray-700 p-6 rounded-2xl shadow-md transition-all duration-300 transform hover:scale-105 hover:shadow-xl flex flex-col items-center text-center" style="animation-delay: 2.9s;">
+                <img src="https://placehold.co/150x100/667eea/ffffff?text=Debugging" alt="Imagen de Debugging" class="rounded-lg mb-4">
+                <dt class="text-xl font-semibold text-indigo-300 mb-2">Debugging</dt>
+                <dd class="text-gray-400 text-sm">Proceso de encontrar y corregir errores en el código. Herramientas como Xdebug o pdb son fundamentales.</dd>
+                <button class="mt-4 bg-blue-600 text-white font-bold py-2 px-4 rounded-full transition-colors duration-300 hover:bg-blue-700" onclick="showExplanation('debugging')">Explicación Detallada</button>
+            </div>
+            
+            <!-- Término 30: Sintaxis -->
+            <div class="animate-fadeInUp bg-gray-700 p-6 rounded-2xl shadow-md transition-all duration-300 transform hover:scale-105 hover:shadow-xl flex flex-col items-center text-center" style="animation-delay: 3.0s;">
+                <img src="https://placehold.co/150x100/6b46c1/ffffff?text=Sintaxis" alt="Imagen de Sintaxis" class="rounded-lg mb-4">
+                <dt class="text-xl font-semibold text-purple-300 mb-2">Sintaxis</dt>
+                <dd class="text-gray-400 text-sm">El conjunto de reglas que definen cómo se deben escribir las instrucciones en un lenguaje de programación para que sean válidas.</dd>
+                <button class="mt-4 bg-blue-600 text-white font-bold py-2 px-4 rounded-full transition-colors duration-300 hover:bg-blue-700" onclick="showExplanation('sintaxis')">Explicación Detallada</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal (Ventana emergente) para las explicaciones detalladas -->
+    <div id="explanationModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2 id="modal-title" class="text-2xl font-bold mb-4"></h2>
+            <p id="modal-explanation" class="text-gray-300"></p>
+        </div>
+    </div>
+
+    <script>
+        // Objeto con las explicaciones detalladas para cada término
+        const explanations = {
+            'variable': {
+                title: 'Variable',
+                text: 'Una variable es un contenedor para almacenar datos. En Python, no necesitas declarar el tipo de dato, mientras que en PHP sí, aunque es de tipado dinámico. Por ejemplo, en Python escribes `nombre = "Juan"`, y en PHP, `$nombre = "Juan";`.'
+            },
+            'funcion': {
+                title: 'Función',
+                text: 'Las funciones son bloques de código diseñados para realizar una tarea específica. Esto evita la repetición de código y hace que tu programa sea más fácil de leer y mantener. En Python se definen con `def` y en PHP con `function`.'
+            },
+            'condicional': {
+                title: 'Condicional (if/else)',
+                text: 'Las estructuras condicionales le permiten a un programa tomar decisiones. Si una condición es verdadera (`if`), se ejecuta un bloque de código, si no (`else`), se ejecuta otro. Esto es fundamental para la lógica de cualquier programa.'
+            },
+            'bucle': {
+                title: 'Bucle (for/while)',
+                text: 'Un bucle es una estructura de control que repite una secuencia de instrucciones hasta que se cumple una condición. Son perfectos para iterar sobre listas, procesar cada elemento de un conjunto de datos o repetir una acción un número específico de veces.'
+            },
+            'lista': {
+                title: 'Lista (Python)',
+                text: 'Una lista en Python es una colección de elementos ordenada y mutable. Puedes agregar, eliminar o modificar elementos en cualquier momento. Se definen con corchetes `[ ]` y pueden contener diferentes tipos de datos.'
+            },
+            'array': {
+                title: 'Array (PHP)',
+                text: 'Un array en PHP es una estructura que almacena uno o más valores en una sola variable. Puede ser un array indexado (usando números) o un array asociativo (usando claves de texto), lo que lo hace muy flexible.'
+            },
+            'diccionario': {
+                title: 'Diccionario (Python)',
+                text: 'Los diccionarios en Python son colecciones de pares clave-valor, no tienen un orden específico. Permiten un acceso rápido y eficiente a los datos a través de sus claves únicas. Se definen con llaves `{ }`.'
+            },
+            'superglobales': {
+                title: 'Superglobales (PHP)',
+                text: 'Las variables superglobales en PHP son arrays que están disponibles en todos los ámbitos de un script. Son útiles para manejar datos del servidor, cookies, sesiones, o información enviada a través de formularios (como `$_POST` y `$_GET`).'
+            },
+            'modulo': {
+                title: 'Módulo (Python)',
+                text: 'En Python, un módulo es simplemente un archivo con extensión `.py` que contiene código que puedes reutilizar en otros programas. Por ejemplo, el módulo `math` tiene funciones para operaciones matemáticas, las cuales puedes importar.'
+            },
+            'namespace': {
+                title: 'Namespace (PHP)',
+                text: 'Los namespaces en PHP se utilizan para evitar conflictos de nombres entre clases, funciones y constantes, especialmente cuando trabajas con librerías de terceros. Ayudan a organizar el código de manera lógica y jerárquica.'
+            },
+            'clase': {
+                title: 'Clase',
+                text: 'Una clase es una plantilla para crear objetos. Define la estructura (atributos) y el comportamiento (métodos) que tendrá cada objeto que se cree a partir de ella. Es un concepto central de la Programación Orientada a Objetos (POO).'
+            },
+            'objeto': {
+                title: 'Objeto',
+                text: 'Un objeto es una instancia de una clase. Si la clase es el "plano", el objeto es la "casa" construida a partir de ese plano. Es una entidad concreta que tiene los atributos y métodos definidos en su clase.'
+            },
+            'poo': {
+                title: 'Programación Orientada a Objetos (POO)',
+                text: 'La POO es un paradigma de programación que se basa en el concepto de "objetos" para estructurar y organizar el código. Sus principios fundamentales son la encapsulación, la herencia, el polimorfismo y la abstracción.'
+            },
+            'herencia': {
+                title: 'Herencia',
+                text: 'La herencia es un mecanismo de la POO que permite que una clase "hija" o "subclase" herede los atributos y métodos de una clase "padre" o "superclase". Esto promueve la reutilización de código y la creación de jerarquías de clases.'
+            },
+            'polimorfismo': {
+                title: 'Polimorfismo',
+                text: 'El polimorfismo es el principio de la POO que permite que un mismo método o función se comporte de manera diferente según el tipo de objeto que lo invoque. Por ejemplo, una función `mostrar()` puede mostrar un texto en una clase `Perro` y una imagen en una clase `Gato`.'
+            },
+            'tupla': {
+                title: 'Tupla (Python)',
+                text: 'Una tupla es una colección de elementos ordenada e **inmutable**. Esto significa que, una vez que se crea, no puedes modificar, agregar o eliminar sus elementos. Se definen con paréntesis `( )`.'
+            },
+            'pdo': {
+                title: 'PDO (PHP)',
+                text: 'PHP Data Objects (PDO) es una extensión de PHP para acceder a bases de datos de forma segura y consistente, sin importar qué tipo de base de datos uses (MySQL, PostgreSQL, etc.). Ayuda a prevenir ataques de inyección SQL.'
+            },
+            'decorador': {
+                title: 'Decorador (Python)',
+                text: 'Un decorador es una función que envuelve a otra función para añadirle funcionalidades extra sin modificar su código original. Se usan con la sintaxis `@nombre_del_decorador` justo antes de la definición de la función.'
+            },
+            'composer': {
+                title: 'Composer (PHP)',
+                text: 'Composer es la herramienta de gestión de dependencias estándar para PHP. Se encarga de instalar las librerías o paquetes que tu proyecto necesita, y de gestionar las versiones de cada uno para evitar conflictos.'
+            },
+            'entorno-virtual': {
+                title: 'Entorno Virtual (Python)',
+                text: 'Un entorno virtual es un directorio que crea una instalación aislada de Python para un proyecto específico. Esto te permite tener diferentes versiones de librerías para cada proyecto sin que entren en conflicto entre sí.'
+            },
+            'autoloading': {
+                title: 'Autoloading (PHP)',
+                text: 'Autoloading es un proceso que carga automáticamente las clases que tu código necesita en tiempo de ejecución. Esto te evita tener que escribir manualmente `include` o `require` para cada archivo de clase, lo que simplifica mucho el desarrollo.'
+            },
+            'pip': {
+                title: 'PIP (Python)',
+                text: 'PIP es el sistema de gestión de paquetes de Python, por sus siglas en inglés "Pip Installs Packages". Con él puedes instalar, actualizar y eliminar librerías de Python desde la terminal de forma muy sencilla.'
+            },
+            'traits': {
+                title: 'Traits (PHP)',
+                text: 'Un trait es un mecanismo que permite la reutilización de métodos en múltiples clases, superando una de las limitaciones de PHP, que no soporta la herencia múltiple. Son similares a "mixins" en otros lenguajes.'
+            },
+            'sesion': {
+                title: 'Sesión (PHP)',
+                text: 'Una sesión es una forma de almacenar información del usuario para que esté disponible en diferentes páginas de un sitio web. Se usa para mantener el estado de la aplicación, como saber si un usuario ha iniciado sesión o qué productos tiene en su carrito.'
+            },
+            'framework': {
+                title: 'Framework',
+                text: 'Un framework es un conjunto de herramientas y librerías que te dan un esqueleto o estructura para construir aplicaciones de forma más rápida y organizada. Ejemplos populares son Django (Python) y Laravel (PHP).'
+            },
+            'cookie': {
+                title: 'Cookie (PHP)',
+                text: 'Una cookie es un pequeño archivo de texto que el servidor web almacena en el navegador del usuario. Se utiliza para recordar información del usuario (como sus preferencias o si ya ha visitado el sitio) entre sesiones.'
+            },
+            'excepcion': {
+                title: 'Excepción',
+                text: 'Una excepción es un evento que ocurre durante la ejecución de un programa y que interrumpe su flujo normal. Los lenguajes de programación tienen mecanismos (como `try/catch` o `try/except`) para manejar estas situaciones de forma controlada y evitar que el programa se caiga.'
+            },
+            'api': {
+                title: 'API',
+                text: 'Una API (Interfaz de Programación de Aplicaciones) es un conjunto de reglas y protocolos que permite a diferentes programas comunicarse entre sí. Por ejemplo, una API de clima permite que tu aplicación obtenga la información del tiempo de un servicio externo.'
+            },
+            'debugging': {
+                title: 'Debugging',
+                text: 'Debugging es el proceso de encontrar y corregir errores o fallos en el código de un programa. Es una habilidad esencial para cualquier programador y se usan herramientas especializadas (depuradores) para hacerlo de forma más eficiente.'
+            },
+            'sintaxis': {
+                title: 'Sintaxis',
+                text: 'La sintaxis es el conjunto de reglas que gobiernan la estructura de un lenguaje de programación. Es como la gramática en un idioma. Si el código no sigue las reglas de sintaxis, el programa no se ejecutará.'
+            }
+        };
+
+        // Función para mostrar el modal con la explicación
+        function showExplanation(termId) {
+            const explanation = explanations[termId];
+            if (explanation) {
+                document.getElementById('modal-title').innerText = explanation.title;
+                document.getElementById('modal-explanation').innerText = explanation.text;
+                document.getElementById('explanationModal').style.display = 'block';
+            }
+        }
+
+        // Función para cerrar el modal
+        function closeExplanation() {
+            document.getElementById('explanationModal').style.display = 'none';
+        }
+
+        // Obtener el botón de cerrar y agregar el evento de clic
+        document.querySelector('.close-button').onclick = function() {
+            closeExplanation();
+        };
+
+        // Cerrar el modal si el usuario hace clic fuera de él
+        window.onclick = function(event) {
+            const modal = document.getElementById('explanationModal');
+            if (event.target == modal) {
+                closeExplanation();
+            }
+        };
+    </script>
+</body>
+</html>
